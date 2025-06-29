@@ -1,0 +1,2 @@
+export const REST_IMG = 'https://assets.architecturaldigest.in/photos/64f848f3ec0bc118bdd98ab6/master/w_960,c_limit/The%20art%20deco%20inspired%20interiors%20of%20Indian%20Accent%20Mumbai.jpg';
+export const LOGO = 'https://www.logo.wine/a/logo/Adidas/Adidas-Logo.wine.svg';
