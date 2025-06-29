@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import { useContext, useEffect, useState } from "react";
+import RestaurantCard, { withPromototedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/userContext";
 const Body = () => {
     const [restaurantList, setRestaurantList] = useState([]);
     const [allRestaurants, setAllRestaurants] = useState([]);
     const [search, setSearch] = useState("");
     const [noData, setNoData] = useState(false);
-
+    const RestaurantCardPromoted = withPromototedLabel(RestaurantCard);
     useEffect(() => {
         fetchData();
     }, []);
-
+const {loggedInUser, setUserName} = useContext(UserContext);
     const fetchData = async () => {
         try {
             const response = await fetch('https://dummyjson.com/products?limit=75&skip=10');
@@ -19,6 +20,7 @@ const Body = () => {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
+            console.log(data.products)
             setRestaurantList(data.products);
             setAllRestaurants(data.products);
         } catch (error) {
@@ -58,6 +60,11 @@ const Body = () => {
                     <div className="searchContainer">
                         <input type="text" placeholder="Search" value={search} onChange={handleSearch} />
                     </div>
+                    <div className="searchContainer">
+                        <input type="text" placeholder="Type here" value={loggedInUser} onChange={(e)=>{
+                            setUserName(e.target.value);                          
+                        }} />
+                    </div>
                     <div className="countContainer">Total : {restaurantList.length}</div>
                 </div>
 
@@ -67,19 +74,24 @@ const Body = () => {
                     ) : (
                         restaurantList.map((product) => (
 
-                            <div
-                                key={product.id}
-                                style={{ cursor: "pointer" }}
-                            >
+                            <div key={product.id} style={{ cursor: "pointer" }}>
                                 <Link to={"/restaurant/" + product.id}>
-                                    <RestaurantCard
-                                        key={product.id}
-                                        title={product.title}
-                                        price={product.price}
-                                        img={product.thumbnail}
-                                    />
+                                    {product.id % 2 === 0 ? (
+                                        <RestaurantCard
+                                            title={product.title}
+                                            price={product.price}
+                                            img={product.thumbnail}
+                                        />
+                                    ) : (
+                                        <RestaurantCardPromoted
+                                            title={product.title}
+                                            price={product.price}
+                                            img={product.thumbnail}
+                                        />
+                                    )}
                                 </Link>
                             </div>
+
 
                         ))
                     )}

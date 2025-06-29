@@ -9,6 +9,7 @@ const Menu = () => {
         const fetchItemData = async () => {
             let res = await fetch(`https://dummyjson.com/products/${resId}`);
             res = await res.json();
+            console.log(res)
             setItemData(res);
         };
         fetchItemData();

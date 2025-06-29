@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { REST_IMG } from "../utils/constants";
+import UserContext from "../utils/userContext";
 
 const RestaurantCard = ({ title, price, img }) => {
+    const userData = useContext(UserContext);
     const styleCard = {
         width: "250px",
         display: "flex",
@@ -58,8 +61,20 @@ const RestaurantCard = ({ title, price, img }) => {
             />
             <h2 style={styleHeading}>{title}</h2>
             <p style={styleText}>Price: ₹{price}</p>
+            <p>Name: {userData.loggedInUser}</p>
         </div>
     );
 };
+
+export const withPromototedLabel = (RestaurantCard) => {
+    return (props) => {
+        return (
+            <div>
+                <label>Promoted</label>
+                <RestaurantCard {...props}/>
+            </div>
+        );
+    }
+}
 
 export default RestaurantCard;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
 import Body from './components/Body';
@@ -7,12 +7,16 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
 import Menu from './components/Menu';
+import UserContext from './utils/userContext';
 
 const AppLayout = () => {
+    const [userName, setUserName] = useState("Ankit");
     return (
         <div className="app">
+            <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
             <Header />
             <Outlet />
+            </UserContext.Provider>
         </div>
     )
 }
