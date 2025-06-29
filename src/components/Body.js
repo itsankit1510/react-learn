@@ -44,55 +44,46 @@ const Body = () => {
 
     if (restaurantList.length === 0 && !noData) {
         return (
-            <div className="loading sleek-loading">
+            <div className="flex justify-center items-center min-h-[60vh]">
                 <Shimmer />
             </div>
         );
     }
 
     return (
-        <main className="body sleek-body">
-            <section className="controls sleek-controls">
+        <main className="max-w-7xl mx-auto px-4 py-8">
+            <section className="flex flex-wrap gap-4 items-center justify-between mb-8 bg-white p-4 rounded-lg shadow">
                 <button
-                    className="filterButton sleek-btn"
+                    className="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition"
                     title="Filter expensive products"
                     onClick={handleFilterButton}
                 >
                     💸 Price Above 1000
                 </button>
                 <input
-                    className="searchInput sleek-input"
+                    className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 w-48"
                     type="text"
                     placeholder="🔍 Search products"
                     value={search}
                     onChange={handleSearch}
                 />
                 <input
-                    className="userInput sleek-input"
+                    className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 w-48"
                     type="text"
                     placeholder="Your name"
                     value={loggedInUser}
                     onChange={e => setUserName(e.target.value)}
                 />
-                <span className="countContainer sleek-count">
-                    Total: {restaurantList.length}
-                </span>
+                <span className="text-gray-600 font-medium">Total: {restaurantList.length}</span>
             </section>
 
-            <section className="restaurantContainer sleek-cards">
+            <section className="flex flex-wrap gap-6 justify-center">
                 {noData ? (
-                    <h2 className="noData sleek-nodata">No Data Found</h2>
+                    <h2 className="text-2xl text-red-500 font-semibold">No Data Found</h2>
                 ) : (
                     restaurantList.map(product => (
-                        <div key={product.id} className="cardWrapper sleek-card fade-in">
-                            <button
-                                className="addToCart sleek-cart-btn"
-                                title="Add to cart"
-                                onClick={() => console.log("Add to Cart")}
-                            >
-                                🛒
-                            </button>
-                            <Link to={`/restaurant/${product.id}`}>
+                        <div key={product.id} className="relative group flex flex-col items-center">
+                            <Link to={`/restaurant/${product.id}`} className="block w-full">
                                 {product.id % 2 === 0 ? (
                                     <RestaurantCard
                                         title={product.title}
@@ -107,6 +98,12 @@ const Body = () => {
                                     />
                                 )}
                             </Link>
+                            <button
+                                className="mt-3 w-11/12 px-4 py-2 bg-indigo-500 text-white rounded-lg font-semibold shadow hover:bg-indigo-600 transition"
+                                onClick={() => console.log({ id: product.id, title: product.title, price: product.price, img: product.thumbnail })}
+                            >
+                                Add to Cart
+                            </button>
                         </div>
                     ))
                 )}

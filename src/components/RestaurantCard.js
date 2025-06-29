@@ -4,64 +4,17 @@ import UserContext from "../utils/userContext";
 
 const RestaurantCard = ({ title, price, img }) => {
     const userData = useContext(UserContext);
-    const styleCard = {
-        width: "250px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        overflow: "hidden",
-        backgroundColor: "#fff",
-        margin: "10px",
-        padding: "15px",
-        transition: "transform 0.2s, box-shadow 0.2s",
-    };
-
-    const styleImage = {
-        width: "100%",
-        height: "150px",
-        objectFit: "cover",
-        borderRadius: "10px 10px 0 0",
-    };
-
-    const styleHeading = {
-        fontSize: "1.2rem",
-        fontWeight: "bold",
-        margin: "10px 0",
-        color: "#333",
-    };
-
-    const styleText = {
-        fontSize: "0.9rem",
-        color: "#555",
-        margin: "5px 0",
-    };
-
     return (
         <div
-            className="restaurantCard"
-            style={styleCard}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.2)";
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
-            }}
+            className="w-64 bg-white rounded-xl shadow-lg flex flex-col items-center p-4 transition-transform duration-200 hover:scale-105 hover:shadow-2xl border border-gray-100"
         >
             <img
-                className="restaurant-image"
+                className="w-full h-40 object-cover rounded-t-lg mb-3"
                 src={img}
                 alt="Product"
-                style={styleImage}
             />
-            <h2 style={styleHeading}>{title}</h2>
-            <p style={styleText}>Price: ₹{price}</p>
-            
+            <h2 className="text-lg font-bold text-gray-800 mb-1 text-center line-clamp-2">{title}</h2>
+            <p className="text-indigo-600 font-semibold text-base mb-2">Price: ₹{price}</p>
             {/* <p>Name: {userData.loggedInUser}</p> */}
         </div>
     );
@@ -70,8 +23,8 @@ const RestaurantCard = ({ title, price, img }) => {
 export const withPromototedLabel = (RestaurantCard) => {
     return (props) => {
         return (
-            <div>
-                <label>Promoted</label>
+            <div className="relative">
+                <span className="absolute -top-3 left-2 bg-yellow-400 text-xs font-bold px-2 py-1 rounded shadow">Promoted</span>
                 <RestaurantCard {...props}/>
             </div>
         );

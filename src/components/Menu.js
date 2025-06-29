@@ -9,97 +9,69 @@ const Menu = () => {
         const fetchItemData = async () => {
             let res = await fetch(`https://dummyjson.com/products/${resId}`);
             res = await res.json();
-            console.log(res)
             setItemData(res);
         };
         fetchItemData();
     }, []);
 
     if (!itemData) {
-        return <div className="menu">Loading...</div>;
+        return <div className="flex justify-center items-center min-h-[60vh] text-xl text-gray-500">Loading...</div>;
     }
 
     return (
-        <div className="menu" style={{
-            maxWidth: 600,
-            margin: "2rem auto",
-            padding: "2rem",
-            borderRadius: "16px",
-            background: "#fff",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.08)"
-        }}>
-            <div style={{ display: "flex", gap: "2rem" }}>
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 mt-8">
+            <div className="flex flex-col md:flex-row gap-8">
                 <img
                     src={itemData.thumbnail}
                     alt={itemData.title}
-                    style={{
-                        width: 180,
-                        height: 180,
-                        objectFit: "cover",
-                        borderRadius: "12px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
-                    }}
+                    className="w-44 h-44 object-cover rounded-xl shadow"
                 />
                 <div>
-                    <h1 style={{ margin: 0, fontSize: "2rem" }}>{itemData.title}</h1>
-                    <p style={{ color: "#888", margin: "0.5rem 0" }}>{itemData.brand} &middot; {itemData.category}</p>
-                    <p style={{ fontWeight: 500, fontSize: "1.2rem", margin: "0.5rem 0" }}>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2">{itemData.title}</h1>
+                    <p className="text-gray-500 mb-1">{itemData.brand} &middot; {itemData.category}</p>
+                    <p className="font-semibold text-lg mb-1">
                         ${itemData.price}{" "}
-                        <span style={{ color: "#2ecc40", fontSize: "1rem" }}>
+                        <span className="text-green-600 text-base font-medium">
                             ({itemData.discountPercentage}% off)
                         </span>
                     </p>
-                    <p style={{ margin: "0.5rem 0" }}>
-                        <span style={{ color: "#f39c12", fontWeight: 600 }}>★ {itemData.rating}</span>
+                    <p className="mb-1">
+                        <span className="text-yellow-500 font-semibold">★ {itemData.rating}</span>
                         {" "}({itemData.reviews?.length || 0} reviews)
                     </p>
-                    <p style={{ margin: "0.5rem 0", color: "#27ae60" }}>
-                        {itemData.availabilityStatus}
-                    </p>
-                    <p style={{ margin: "0.5rem 0", color: "#888" }}>
-                        Min. Order: {itemData.minimumOrderQuantity}
-                    </p>
+                    <p className="mb-1 text-green-600">{itemData.availabilityStatus}</p>
+                    <p className="mb-1 text-gray-500">Min. Order: {itemData.minimumOrderQuantity}</p>
                 </div>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
-                <h2>Description</h2>
-                <p>{itemData.description}</p>
+            <div className="mt-6">
+                <h2 className="text-xl font-semibold mb-2">Description</h2>
+                <p className="text-gray-700">{itemData.description}</p>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
-                <h3>Tags</h3>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div className="mt-6">
+                <h3 className="font-semibold mb-2">Tags</h3>
+                <div className="flex gap-2 flex-wrap">
                     {itemData.tags?.map(tag => (
-                        <span key={tag} style={{
-                            background: "#f1f1f1",
-                            borderRadius: "8px",
-                            padding: "0.3rem 0.8rem",
-                            fontSize: "0.9rem"
-                        }}>{tag}</span>
+                        <span key={tag} className="bg-gray-100 rounded px-3 py-1 text-sm">{tag}</span>
                     ))}
                 </div>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
-                <h3>Reviews</h3>
+            <div className="mt-6">
+                <h3 className="font-semibold mb-2">Reviews</h3>
                 {itemData.reviews && itemData.reviews.length > 0 ? (
-                    <ul style={{ paddingLeft: 0, listStyle: "none" }}>
+                    <ul className="space-y-3">
                         {itemData.reviews.map((review, idx) => (
-                            <li key={idx} style={{
-                                background: "#fafafa",
-                                borderRadius: "8px",
-                                marginBottom: "0.7rem",
-                                padding: "0.7rem 1rem"
-                            }}>
-                                <strong>{review.reviewerName}</strong> &middot; <span style={{ color: "#f39c12" }}>★ {review.rating}</span>
-                                <p style={{ margin: "0.3rem 0" }}>{review.comment}</p>
-                                <small style={{ color: "#aaa" }}>{new Date(review.date).toLocaleDateString()}</small>
+                            <li key={idx} className="bg-gray-50 rounded p-3">
+                                <strong>{review.reviewerName}</strong> &middot; <span className="text-yellow-500">★ {review.rating}</span>
+                                <p className="my-1">{review.comment}</p>
+                                <small className="text-gray-400">{new Date(review.date).toLocaleDateString()}</small>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p>No reviews yet.</p>
+                    <p className="text-gray-400">No reviews yet.</p>
                 )}
             </div>
-            <div style={{ marginTop: "1.5rem", color: "#888" }}>
+            <div className="mt-6 text-gray-500">
                 <p><strong>Warranty:</strong> {itemData.warrantyInformation}</p>
                 <p><strong>Shipping:</strong> {itemData.shippingInformation}</p>
                 <p><strong>Return Policy:</strong> {itemData.returnPolicy}</p>

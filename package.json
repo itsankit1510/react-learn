@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel index.html",
-    "prod": "parcel build index.html"
+    "start": "parcel src/index.html",
+    "prod": "parcel build src/index.html"
   },
   "author": "",
   "license": "ISC",
@@ -13,8 +13,12 @@
     "parcel": "^2.14.4"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tailwindcss/postcss": "^4.1.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.30.0"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.30.0",
+    "tailwindcss": "^4.1.11"
   }
 }
