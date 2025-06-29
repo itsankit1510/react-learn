@@ -61,7 +61,8 @@ const RestaurantCard = ({ title, price, img }) => {
             />
             <h2 style={styleHeading}>{title}</h2>
             <p style={styleText}>Price: ₹{price}</p>
-            <p>Name: {userData.loggedInUser}</p>
+            
+            {/* <p>Name: {userData.loggedInUser}</p> */}
         </div>
     );
 };
